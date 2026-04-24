@@ -1,17 +1,29 @@
-const buttons = ['A', 'B', 'C', 'D'];
+import { useScore } from '../score/useScore';
+import { useMemoryGame } from './useMemoryGame';
 
 export function MemoryPage() {
+  const { decrementGamesLeft } = useScore();
+  const { buttons, handleButtonClick, isInputDisabled, visibleChar } = useMemoryGame({
+    onWin: decrementGamesLeft,
+  });
+
   return (
-    <section className="page-fill grid grid-rows-2">
-      <div className="grid grid-cols-4">
+    <section className="memory-page">
+      <div className="memory-buttons">
         {buttons.map((button) => (
-          <button key={button} type="button" className="border border-gray-300">
+          <button
+            key={button}
+            type="button"
+            className="memory-button"
+            disabled={isInputDisabled}
+            onClick={() => handleButtonClick(button)}
+          >
             {button}
           </button>
         ))}
       </div>
-      <div className="flex items-center justify-center">
-        <div className="h-5 w-5 bg-[#cccccc]" />
+      <div className="memory-instruction-area">
+        <div className="memory-instruction-box">{visibleChar}</div>
       </div>
     </section>
   );
