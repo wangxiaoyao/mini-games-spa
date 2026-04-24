@@ -201,6 +201,31 @@ body {
   line-height: 20px;
 }
 
+.space-page {
+  display: flex;
+  width: 100%;
+  min-height: calc(100vh - var(--footer-height));
+  align-items: center;
+  justify-content: center;
+}
+
+.space-window {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  border: 1px solid #000;
+}
+
+.space-shooter {
+  position: absolute;
+  background: red;
+}
+
+.space-target {
+  position: absolute;
+  background: #000;
+}
+
 @media (max-width: 1399px) {
   .nav-label-full {
     display: none;

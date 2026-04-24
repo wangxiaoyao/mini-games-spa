@@ -1,8 +1,34 @@
+import { useScore } from '../score/useScore';
+import { GAME_SIZE, SHOOTER_SIZE, TARGET_SIZE, useSpaceGame } from './useSpaceGame';
+
 export function SpacePage() {
+  const { decrementGamesLeft } = useScore();
+  const { shooterX, targets } = useSpaceGame({ onWin: decrementGamesLeft });
+
   return (
-    <section className="page-fill flex items-center justify-center">
-      <div className="relative h-[500px] w-[500px] border border-black">
-        <div className="absolute bottom-0 left-0 h-[10px] w-[10px] bg-red-600" />
+    <section className="space-page">
+      <div className="space-window" aria-label="Space invaders game window">
+        {targets.map((target) => (
+          <div
+            key={target.id}
+            className="space-target"
+            style={{
+              left: target.x,
+              top: target.y,
+              width: TARGET_SIZE,
+              height: TARGET_SIZE,
+            }}
+          />
+        ))}
+        <div
+          className="space-shooter"
+          style={{
+            left: shooterX,
+            top: GAME_SIZE - SHOOTER_SIZE,
+            width: SHOOTER_SIZE,
+            height: SHOOTER_SIZE,
+          }}
+        />
       </div>
     </section>
   );
