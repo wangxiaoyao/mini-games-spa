@@ -8,7 +8,13 @@ const GAMES_LEFT_KEY = 'mini-games.gamesLeft';
 const FALLBACK_SCORE = 5;
 
 function readStoredNumber(key) {
-  const storedValue = window.localStorage.getItem(key);
+  let storedValue = null;
+
+  try {
+    storedValue = window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
 
   if (storedValue === null) {
     return null;
@@ -23,7 +29,11 @@ function readStoredNumber(key) {
 }
 
 function writeStoredNumber(key, value) {
-  window.localStorage.setItem(key, JSON.stringify(value));
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // localStorage can be unavailable in restricted browser modes.
+  }
 }
 
 export function ScoreProvider({ children }) {
