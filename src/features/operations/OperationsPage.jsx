@@ -1,17 +1,42 @@
+import { useScore } from '../score/useScore';
+import { useOperationsGame } from './useOperationsGame';
+
 export function OperationsPage() {
+  const { decrementGamesLeft } = useScore();
+  const { chooseOperation, currentNumbers, operations } = useOperationsGame();
+  const [left, right, result] = currentNumbers;
+
+  function handleOperationClick(operationLabel) {
+    const isCorrect = chooseOperation(operationLabel);
+
+    if (isCorrect) {
+      window.alert('You won!');
+      decrementGamesLeft();
+      return;
+    }
+
+    window.alert('Incorrect');
+  }
+
   return (
-    <section className="page-fill flex items-center">
-      <div className="flex h-[100px] w-full items-center justify-around bg-[rgb(200,255,255)]">
-        <span>1</span>
-        <div className="flex gap-2">
-          <button type="button">+</button>
-          <button type="button">-</button>
-          <button type="button">x</button>
-          <button type="button">÷</button>
+    <section className="operations-page">
+      <div className="operations-box">
+        <span className="operations-cell">{left}</span>
+        <div className="operations-cell operations-buttons">
+          {operations.map((operation) => (
+            <button
+              key={operation.label}
+              className="operation-button"
+              type="button"
+              onClick={() => handleOperationClick(operation.label)}
+            >
+              {operation.label}
+            </button>
+          ))}
         </div>
-        <span>2</span>
-        <span>=</span>
-        <span>2</span>
+        <span className="operations-cell">{right}</span>
+        <span className="operations-cell">=</span>
+        <span className="operations-cell">{result}</span>
       </div>
     </section>
   );
